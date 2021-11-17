@@ -3,6 +3,7 @@
 #include "CipherType.hpp"
 #include "ProcessCommandLine.hpp"
 #include "TransformChar.hpp"
+#include "PlayfairCipher.hpp"
 
 #include <cctype>
 #include <fstream>
@@ -40,7 +41,6 @@ int main(int argc, char* argv[])
             << "  -i FILE          Read text to be processed from FILE\n"
             << "                   Stdin will be used if not supplied\n\n"
             << "  -o FILE          Write processed text to FILE\n"
-            << "                   Stdout will be used if not supplied\n\n"
             << "                   Stdout will be used if not supplied\n\n"
             << "  -c CIPHER        Specify the cipher to be used to perform the encryption/decryption\n"
             << "                   CIPHER can be caesar or playfair (not yet implemented) - caesar is the default\n\n"
@@ -99,9 +99,9 @@ int main(int argc, char* argv[])
             break;
         }
         case CipherType::Playfair: {
-            std::cerr << "[warning] Playfair cipher not yet implemented"
-                      << std::endl;
-            outputText = inputText;
+            // Run the Playfair cipher (using the specified key and encrypt/decrypt flag) on the input text
+            PlayfairCipher cipher{settings.cipherKey};
+            outputText = cipher.applyCipher(inputText, settings.cipherMode);
             break;
         }
     }
